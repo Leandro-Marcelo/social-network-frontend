@@ -1,7 +1,10 @@
 import { MoreVert } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { Users } from "../dummyData";
 
 export default function Post({ post }) {
+  const user = Users.filter((user) => user.id === post.userId);
+  console.log(user[0].username);
   return (
     <div className="post w-full rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)] my-8 mx-0">
       <div className="postWrapper px-3 py-3">
@@ -10,12 +13,15 @@ export default function Post({ post }) {
             <Link to={`/profile/`}>
               <img
                 className="postProfileImg w-8 h-8 rounded-[50%] object-cover"
-                src="/assets/person/1.jpeg"
+                src={`/assets/${
+                  Users.filter((user) => user.id === post.userId)[0]
+                    .profilePicture
+                }`}
                 alt=""
               />
             </Link>
             <span className="postUsername text-[15px] font-medium my-0 mx-3">
-              Leandro Marcelo
+              {Users.filter((user) => user.id === post.userId)[0].username}
             </span>
             <span className="postDate text-[12px]">{post.date}</span>
           </div>
@@ -28,7 +34,7 @@ export default function Post({ post }) {
           <span className="postText">{post?.desc}</span>
           <img
             className="postImg mt-5 w-full max-h-[700px] object-contain"
-            src="/assets/post/1.jpeg"
+            src={`/assets/${post.photo}`}
             alt=""
           />
         </div>

@@ -15,7 +15,7 @@ import CloseFriend from "../closeFriend/CloseFriend"; */
 export default function Sidebar() {
   return (
     /* hidden para mobil, md:block para desktop, le dice 100vh y le resta 50px porque es lo mide el Navbar, scroll en y para que no tenga que bajar para ver a los amigos/o personas, creo que son personas que no tiene agregada */
-    <div className="hidden md:block sidebar md:flex-[2] h-[calc(100vh-50px)] overflow-y-scroll">
+    <div className="hidden md:block sidebar md:flex-[2] h-[calc(100vh-50px)] overflow-y-scroll sticky top-[50px]">
       <div className="sidebarWrapper px-5 py-5 ">
         <ul className="sidebarList">
           <li className="sidebarListItem flex items-center mb-5">
@@ -55,7 +55,7 @@ export default function Sidebar() {
             <span className="sidebarListItemText">Courses</span>
           </li>
         </ul>
-        <button className="sidebarButton w-36 border-none px-3 py-3 rounded-md font-medium bg-[#f8efef]">
+        <button className="sidebarButton w-36 border-none px-3 py-3 rounded-md font-medium bg-[#ddd5]">
           Show More
         </button>
         <hr className="sidebarHr  my-5 mx-0" />

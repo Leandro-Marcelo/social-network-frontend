@@ -98,7 +98,7 @@ export default function Rightbar({ user }) {
           src="assets/ad.png"
           alt=""
         />
-        <h4 className="rightbarTitle mb-5">Online Friend</h4>
+        <h4 className="rightbarTitle mb-5 font-bold text-xl">Online Friend</h4>
         <ul className="rightbarFriendList">
           <li className="rightbarFriend flex items-center mb-4">
             <div className="rightbarProfileImgContainer mr-3 relative ">

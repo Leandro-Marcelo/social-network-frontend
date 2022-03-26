@@ -4,7 +4,7 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 
 const Topbar = () => {
   return (
-    <div className="topbarContainer h-[50px] w-full bg-[#1877f2] flex items-center sticky top-0">
+    <div className="topbarContainer h-[50px] w-full bg-[#1877f2] flex items-center sticky top-0 z-50">
       <div className="topbarLeft flex-[2] md:flex-[3] ">
         <span className="cursor-pointer font-semibold ml-5 text-white text-xs md:text-2xl ">
           Leandro
