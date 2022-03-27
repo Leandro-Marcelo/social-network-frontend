@@ -7,13 +7,14 @@ import {
 } from "@material-ui/icons";
 
 export default function Share() {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="share w-full h-[170px] rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)]">
       <div className="shareWrapper py-3 px-3">
         <div className="shareTop flex items-center">
           <img
             className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
-            src="/assets/person/1.jpeg"
+            src={PF + "/person/1.jpeg"}
             alt="person1"
           />
 

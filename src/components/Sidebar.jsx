@@ -9,8 +9,8 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-/* import { Users } from "../../dummyData";
-import CloseFriend from "../closeFriend/CloseFriend"; */
+import { Users } from "../dummyData";
+import CloseFriend from "./CloseFriend";
 
 export default function Sidebar() {
   return (
@@ -59,101 +59,12 @@ export default function Sidebar() {
           Show More
         </button>
         <hr className="sidebarHr  my-5 mx-0" />
+        <ul className="sidebarFriendList"></ul>
         <ul className="sidebarFriendList">
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-          <li className="sidebarFriend flex items-center mb-4">
-            <img
-              src="/assets/person/2.jpeg"
-              alt=""
-              className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
-            />
-            <span className="sidebarFriendName">Jane Done</span>
-          </li>
-        </ul>
-        {/* <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+          {Users.map((user) => (
+            <CloseFriend key={user.id} user={user} />
           ))}
-        </ul> */}
+        </ul>
       </div>
     </div>
   );

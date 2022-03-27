@@ -1,10 +1,9 @@
-import "./profile.css";
-import Topbar from "../../components/topbar/Topbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Feed from "../../components/feed/Feed";
-import Rightbar from "../../components/rightbar/Rightbar";
+import Topbar from "../components/Topbar";
+import Sidebar from "../components/Sidebar";
+import Feed from "../components/Feed";
+import Rightbar from "../components/Rightbar";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { aGet } from "../axios/index";
 import { useParams } from "react-router";
 
 export default function Profile() {
@@ -14,45 +13,42 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
+      console.log(`username:`, username);
+      const res = await aGet(`api/users?username=${username}`);
+      console.log(res.data);
       setUser(res.data);
     };
     fetchUser();
+    /*  si la database cambiará el id, sería correcto volver a renderizar todo */
   }, [username]);
 
   return (
     <>
       <Topbar />
-      <div className="profile">
+      <div className="profile flex">
         <Sidebar />
-        <div className="profileRight">
+        <div className="profileRight flex-[9]">
           <div className="profileRightTop">
-            <div className="profileCover">
+            <div className="profileCover  h-[320px] relative">
               <img
-                className="profileCoverImg"
-                src={
-                  user.coverPicture
-                    ? PF + user.coverPicture
-                    : PF + "person/noCover.png"
-                }
-                alt=""
+                className="profileCoverImg w-full h-[250px] object-cover "
+                /* revisar si funciona el cover por defecto */
+                src={user.coverPicture || PF + "person/noCover.png"}
+                alt="cover"
               />
               <img
-                className="profileUserImg"
-                src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
-                alt=""
+                className="profileUserImg w-[150px] h-[150px] rounded-[50%] object-cover absolute left-0 right-0 mx-auto top-[150px] border-[3px] border-white bg-white"
+                /* revisar si funciona el profile por defecto */
+                src={user.profilePicture || PF + "/person/noAvatar.png"}
+                alt="profile"
               />
             </div>
-            <div className="profileInfo">
-              <h4 className="profileInfoName">{user.username}</h4>
-              <span className="profileInfoDesc">{user.desc}</span>
+            <div className="profileInfo flex flex-col justify-center items-center">
+              <h4 className="profileInfoName text-2xl">{user.username}</h4>
+              <span className="profileInfoDesc font-light">{user.desc}</span>
             </div>
           </div>
-          <div className="profileRightBottom">
+          <div className="profileRightBottom flex">
             <Feed username={username} />
             <Rightbar user={user} />
           </div>

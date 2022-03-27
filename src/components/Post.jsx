@@ -1,29 +1,46 @@
 import { MoreVert } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Users } from "../dummyData";
+import { aGet } from "../axios/index";
 
 export default function Post({ post }) {
-  const user = Users.filter((user) => user.id === post.userId);
-  console.log(user[0].username);
+  const [like, setLike] = useState(post.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [user, setUser] = useState({});
+  /*    const { user: currentUser } = useContext(AuthContext); */
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await aGet(`api/users?userId=${post.userId}`);
+      console.log(`User`, res.data);
+      setUser(res.data);
+    };
+    fetchUser();
+    /* si la database cambiará el id, sería correcto volver a renderizar todo */
+  }, [post.userId]);
+
+  const likeHandler = () => {
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
   return (
     <div className="post w-full rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)] my-8 mx-0">
       <div className="postWrapper px-3 py-3">
         <div className="postTop flex items-center justify-between">
           <div className="postTopLeft flex items-center ml-2">
-            <Link to={`/profile/`}>
+            <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg w-8 h-8 rounded-[50%] object-cover"
-                src={`/assets/${
-                  Users.filter((user) => user.id === post.userId)[0]
-                    .profilePicture
-                }`}
+                src={user.profilePicture || PF + "person/noAvatar.png"}
                 alt=""
               />
             </Link>
             <span className="postUsername text-[15px] font-medium my-0 mx-3">
-              {Users.filter((user) => user.id === post.userId)[0].username}
+              {user.username}
             </span>
-            <span className="postDate text-[12px]">{post.date}</span>
+            {/* encontrar un format */}
+            <span className="postDate text-[12px]">{post.createdAt}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
@@ -34,7 +51,7 @@ export default function Post({ post }) {
           <span className="postText">{post?.desc}</span>
           <img
             className="postImg mt-5 w-full max-h-[700px] object-contain"
-            src={`/assets/${post.photo}`}
+            src={post.img}
             alt=""
           />
         </div>
@@ -42,16 +59,18 @@ export default function Post({ post }) {
           <div className="postBottomLeft flex items-center">
             <img
               className="likeIcon w-6 h-6 mr-1 cursor-pointer"
-              src="/assets/like.png"
+              src={PF + "/like.png"}
               alt=""
+              onClick={likeHandler}
             />
             <img
               className="likeIcon w-6 h-6 mr-1 cursor-pointer"
-              src="/assets/heart.png"
+              src={PF + "/heart.png"}
               alt=""
+              onClick={likeHandler}
             />
             <span className="postLikeCounter text-[15px]">
-              {post.like} people like it
+              {like} people like it
             </span>
           </div>
           <div className="postBottomRight">

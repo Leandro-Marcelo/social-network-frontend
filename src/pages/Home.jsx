@@ -1,8 +1,8 @@
 import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
-/* import { Person } from "@material-ui/icons"; */
 import Topbar from "../components/Topbar";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   return (
