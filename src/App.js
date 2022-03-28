@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   const user = useSelector((state) => state.user);
-  console.log(`estados viendolos de app`, user);
+  /* console.log(`estados viendolos de app`, user); */
 
   return (
     <BrowserRouter>

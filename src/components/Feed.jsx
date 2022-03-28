@@ -5,7 +5,7 @@ import Post from "./Post";
 import Share from "./Share";
 /* RECIBE USERNAME POR EL PROFILE */
 export default function Feed({ username }) {
-  console.log(`logic render se ejecutó`);
+  /* console.log(`logic render se ejecutó`); */
   const [posts, setPosts] = useState([]);
   const [published, setPublished] = useState(false);
   const user = useSelector((state) => state.user);
@@ -39,9 +39,9 @@ export default function Feed({ username }) {
 
   return (
     <div className="feed flex-[5.5] ">
-      {console.log(`Render se ejecutó`)}
+      {/* {console.log(`Render se ejecutó`)} */}
       <div className="feedWrapper px-5 py-5">
-        {!username || username === user.loggedUser.username ? (
+        {!username || username === user.loggedUser?.username ? (
           <Share updatedPost={updatedPost} />
         ) : (
           ""

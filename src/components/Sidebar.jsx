@@ -11,8 +11,40 @@ import {
 } from "@material-ui/icons";
 import { Users } from "../dummyData";
 import CloseFriend from "./CloseFriend";
+import { useEffect, useState } from "react";
+import { aGet } from "../axios";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
+  const user = useSelector((state) => state.user);
+  const [usersList, setUsersList] = useState([]);
+  console.log(usersList);
+  console.log(user);
+  useEffect(() => {
+    console.log(`se ejecuta el useEffect de getUser`);
+    let isCancelled = false;
+    const getUsers = async () => {
+      console.log(
+        `getUsers se ejecutró desde sidebARS`,
+        typeof user.loggedUser.username
+      );
+      const usersList = await aGet(
+        `api/users/all/users?username=${user.loggedUser.username}`
+      );
+      if (!isCancelled) {
+        setUsersList(usersList.data);
+      }
+    };
+
+    if (user?.loggedUser?.username) {
+      console.log(user.loggedUser.username);
+      getUsers();
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [user]);
   return (
     /* hidden para mobil, md:block para desktop, le dice 100vh y le resta 50px porque es lo mide el Navbar, scroll en y para que no tenga que bajar para ver a los amigos/o personas, creo que son personas que no tiene agregada */
     <div className="hidden md:block sidebar md:flex-[2] h-[calc(100vh-50px)] overflow-y-scroll sticky top-[50px]">
@@ -61,8 +93,8 @@ export default function Sidebar() {
         <hr className="sidebarHr  my-5 mx-0" />
         <ul className="sidebarFriendList"></ul>
         <ul className="sidebarFriendList">
-          {Users.map((user) => (
-            <CloseFriend key={user.id} user={user} />
+          {usersList.map((userList) => (
+            <CloseFriend key={userList._id} user={userList} />
           ))}
         </ul>
       </div>

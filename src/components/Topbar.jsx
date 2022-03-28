@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 const Topbar = () => {
   const user = useSelector((state) => state.user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log(`también se renderiza?`);
   return (
     <div className="topbarContainer h-[50px] w-full bg-[#1877f2] flex items-center sticky top-0 z-50">
       <div className="topbarLeft flex-[2] md:flex-[3] ">

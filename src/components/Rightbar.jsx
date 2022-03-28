@@ -7,11 +7,34 @@ import { aGet, aPut } from "../axios";
 import { useSelector } from "react-redux";
 
 export default function Rightbar({ profileUser }) {
-  console.log(`el valor de profileUser:`, profileUser);
   const user = useSelector((state) => state.user);
   const [friends, setFriends] = useState(null);
   const [followed, setFollowed] = useState(false);
+  const [usersList, setUsersList] = useState([]);
+
   useEffect(() => {
+    let isCancelled = false;
+    const getUsers = async () => {
+      const usersList = await aGet(
+        `api/users/all/users?username=${user.loggedUser.username}`
+      );
+      if (!isCancelled) {
+        setUsersList(usersList.data);
+      }
+    };
+
+    if (user?.loggedUser?.username) {
+      getUsers();
+    }
+    console.log(usersList);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(`ejecuto useEffect de getFriends`);
     let isCancelled = false;
     const getFriends = async () => {
       const friendList = await aGet("api/users/friend/" + profileUser._id);
@@ -30,6 +53,7 @@ export default function Rightbar({ profileUser }) {
   }, [profileUser?._id]);
 
   useEffect(() => {
+    console.log(`ejecuto useEffect de setFollowed()`);
     if (profileUser?._id) {
       setFollowed(profileUser.followers.includes(user.loggedUser?._id));
     }
@@ -71,8 +95,9 @@ export default function Rightbar({ profileUser }) {
         />
         <h4 className="rightbarTitle mb-5 font-bold text-xl">Online Friend</h4>
         <ul className="rightbarFriendList">
-          {Users.map((userMap) => (
-            <Online key={userMap.id} user={userMap} />
+          {usersList.map((userList) => (
+            /* console.log(`devuelve un choclo xd como id:`,userList._id); */
+            <Online key={userList._id} user={userList} />
           ))}
         </ul>
       </>

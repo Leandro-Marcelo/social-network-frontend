@@ -3,7 +3,7 @@ export default function CloseFriend({ user }) {
   return (
     <li className="sidebarFriend flex items-center mb-4">
       <img
-        src={PF + user.profilePicture}
+        src={user.profilePicture || PF + "/person/noAvatar.png"}
         alt=""
         className="sidebarFriendImg w-8 h-8 rounded-[50%] object-cover mr-3"
       />
