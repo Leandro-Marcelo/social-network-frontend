@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { aPost } from "./axios/index";
+import { aPost, aGet } from "./axios/index";
 
 export const login = createAsyncThunk(
   "user/login",
   async (credentials, thunkAPI) => {
-    const response = await aPost("auth/login", {
+    const response = await aPost("api/auth/login", {
       email: credentials.email,
       password: credentials.password,
     });
-
+    console.log(`el backend`, response);
     //action.payload del reducer (fullfilled)
+    /* console.log(`backend`, response.data); */
     return response.data;
   }
 );
@@ -17,7 +18,7 @@ export const login = createAsyncThunk(
 export const signUp = createAsyncThunk(
   "user/signUp",
   async (credentials, thunkAPI) => {
-    const response = await aPost("auth/signup", {
+    const response = await aPost("api/auth/signup", {
       email: credentials.email,
       password: credentials.password,
       username: credentials.username,
@@ -31,13 +32,23 @@ export const signUp = createAsyncThunk(
 export const validate = createAsyncThunk(
   "user/validate",
   async (params, thunkAPI) => {
-    const response = await aPost("auth/validate");
+    const response = await aPost("api/auth/validate");
+    return response.data;
+  }
+);
+/* al final no lo utilizamos porque necesitamos desmontarlo para que no actualice el estado */
+export const setPostRedux = createAsyncThunk(
+  "user/post",
+  async (credentials, thunkAPI) => {
+    const response = credentials.username
+      ? await aGet("api/posts/profile/" + credentials.username)
+      : await aGet(`api/posts/timeline/${credentials.logged}`);
     return response.data;
   }
 );
 
 export const logout = createAsyncThunk("user/logout", async () => {
-  const res = await aPost("auth/logout");
+  const res = await aPost("api/auth/logout");
   return res.data;
 });
 
@@ -51,6 +62,7 @@ const userSlice = createSlice({
     error: true,
     message: "",
     loggedUser: null,
+    posts: [],
   },
   // Thunks
   extraReducers(builder) {
@@ -64,11 +76,12 @@ const userSlice = createSlice({
 
     builder.addCase(login.fulfilled, (state, action) => {
       state.isFetching = false;
-      state.logged = true;
+      state.logged = action.payload.success;
       state.error = false;
       state.loggedUser = action.payload.user;
+      state.message = action.payload.message;
     });
-
+    /* para que entre a rejected, es importante que el backend envie un status 404, 400, etc */
     builder.addCase(login.rejected, (state, action) => {
       state.isFetching = false;
       state.error = true;
@@ -124,6 +137,22 @@ const userSlice = createSlice({
       state.error = true;
       state.logged = false;
       state.message = "Error";
+      state.isFetching = false;
+    });
+
+    builder.addCase(setPostRedux.pending, (state, action) => {
+      state.isFetching = true;
+    });
+
+    builder.addCase(setPostRedux.fulfilled, (state, action) => {
+      state.logged = true;
+      state.error = false;
+      state.isFetching = false;
+      state.posts = action.payload;
+    });
+
+    builder.addCase(setPostRedux.rejected, (state, action) => {
+      state.logged = false;
       state.isFetching = false;
     });
   },

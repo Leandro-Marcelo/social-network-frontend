@@ -1,21 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 import { useSelector } from "react-redux";
 
 const Topbar = () => {
-  /* const { user } = useContext(AuthContext); */
   const user = useSelector((state) => state.user);
-  console.log(user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
+  console.log(`también se renderiza?`);
   return (
     <div className="topbarContainer h-[50px] w-full bg-[#1877f2] flex items-center sticky top-0 z-50">
       <div className="topbarLeft flex-[2] md:flex-[3] ">
-        <Link to={"/"}>
+        <Link to={"/home"}>
           <span className="cursor-pointer font-semibold ml-5 text-white text-xs md:text-2xl ">
-            Leandro
+            Home
           </span>
         </Link>
       </div>
@@ -32,10 +29,10 @@ const Topbar = () => {
       <div className="topbarRight flex-[4] flex items-center justify-around text-white">
         <div className="topbarLinks">
           <span className="topbarLink mr-[10px] text-xs md:text-xl cursor-pointer ">
-            Homepage
+            {user.logged ? "Logout" : ""}
           </span>
           <span className="topbarLink mr-[10px] text-xs md:text-xl cursor-pointer">
-            Timeline
+            Sign Up
           </span>
         </div>
         <div className="topbarIcons flex ">
@@ -58,17 +55,17 @@ const Topbar = () => {
             </span>
           </div>
         </div>
-        {/*  <Link to={`/profile/${loggedUser.username}`}>
+        <Link to={`/profile/${user?.loggedUser?.username}`}>
           <img
             src={
-              loggedUser.profilePicture
-                ? loggedUser.profilePicture
+              user.loggedUser?.profilePicture
+                ? user.loggedUser?.profilePicture
                 : PF + "person/noAvatar.png"
             }
             alt="person1"
             className="topbarImg w-8 h-8 rounded-[50%] object-cover cursor-pointer mr-4 md:mr-2"
           />
-        </Link> */}
+        </Link>
       </div>
     </div>
   );

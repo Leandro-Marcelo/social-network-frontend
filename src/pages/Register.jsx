@@ -9,7 +9,7 @@ export default function Register() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (user.logged) {
-      navigate("/");
+      navigate("/home");
     }
   }, [user]);
 

@@ -12,16 +12,20 @@ export default function Profile() {
   const username = useParams().username;
 
   useEffect(() => {
+    let isCancelled = false;
     const fetchUser = async () => {
-      console.log(`username:`, username);
       const res = await aGet(`api/users?username=${username}`);
-      console.log(res.data);
-      setUser(res.data);
+      if (!isCancelled) {
+        setUser(res.data);
+      }
     };
+
     fetchUser();
     /*  si la database cambiará el id, sería correcto volver a renderizar todo */
+    return () => {
+      isCancelled = true;
+    };
   }, [username]);
-
   return (
     <>
       <Topbar />
@@ -50,7 +54,7 @@ export default function Profile() {
           </div>
           <div className="profileRightBottom flex">
             <Feed username={username} />
-            <Rightbar user={user} />
+            <Rightbar profileUser={user} />
           </div>
         </div>
       </div>

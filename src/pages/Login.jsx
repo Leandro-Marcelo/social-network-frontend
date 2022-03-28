@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { CircularProgress } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import { login } from "../userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { login } from "../userSlice";
 
 export default function Login() {
+  console.log(`Ya validó`);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (user.logged) {
-      navigate("/");
+      console.log(`Ya validado, voy a redireccionarlo y ya tendrá el _id`);
+      navigate("/home");
     }
   }, [user]);
 
@@ -65,6 +67,7 @@ export default function Login() {
             >
               {user.isFetching ? <CircularProgress /> : "Log In"}
             </button>
+            {user.message && <p className="mx-auto">{user.message}</p>}
             <span className="loginForgot text-center text-[#1775ee] mb-2">
               Forgot Password?
             </span>

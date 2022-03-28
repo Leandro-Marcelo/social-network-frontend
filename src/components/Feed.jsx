@@ -1,35 +1,53 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { aGet } from "../axios/index";
-/* import { AuthContext } from "../context/AuthContext"; */
-/* import { AuthContext } from "../../context/AuthContext"; */
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Post from "./Post";
 import Share from "./Share";
 /* RECIBE USERNAME POR EL PROFILE */
 export default function Feed({ username }) {
+  console.log(`logic render se ejecutó`);
   const [posts, setPosts] = useState([]);
+  const [published, setPublished] = useState(false);
   const user = useSelector((state) => state.user);
-  const loggedUser = user.loggedUser;
-
+  const logged = user.logged ? user.loggedUser._id : null;
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = username
+    console.log(`useEffect se ejecutó`);
+    let isCancelled = false;
+    const fetchUser = async () => {
+      const response = username
         ? await aGet("api/posts/profile/" + username)
-        : await aGet(`api/posts/timeline/${loggedUser._id}`);
-      console.log(`la dataaa`, res);
-      setPosts(res.data);
+        : await aGet(`api/posts/timeline/${logged}`);
+      if (!isCancelled) {
+        setPosts(
+          response.data.sort(
+            (post1, post2) =>
+              new Date(post2.createdAt) - new Date(post1.createdAt)
+          )
+        );
+      }
     };
-    fetchPosts();
-    //y esto debe volver a renderizarse cuando cambie el username
-    /* aca iba user y funcionaba perfect */
-  }, [username, loggedUser._id]);
+
+    fetchUser();
+    return () => {
+      isCancelled = true;
+    };
+  }, [published]);
+
+  const updatedPost = () => {
+    setPublished(!published);
+  };
 
   return (
     <div className="feed flex-[5.5] ">
+      {console.log(`Render se ejecutó`)}
       <div className="feedWrapper px-5 py-5">
-        <Share />
+        {!username || username === user.loggedUser.username ? (
+          <Share updatedPost={updatedPost} />
+        ) : (
+          ""
+        )}
+
         {posts.map((post) => {
-          console.log({ post });
           return <Post post={post} key={post._id} />;
         })}
       </div>

@@ -2,19 +2,31 @@ import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
 import Topbar from "../components/Topbar";
-import { useNavigate } from "react-router-dom";
+/* import { useEffect } from "react"; */
+import { useSelector } from "react-redux";
+/* import { useNavigate } from "react-router-dom"; */
 
 export default function Home() {
+  const user = useSelector((state) => state.user);
+  /*   const navigate = useNavigate(); */
+
+  /* agregar el logout  */
+  /*   useEffect(() => {
+    if (!user.logged) {
+      navigate("/login");
+    }
+  }, []); */
+
   return (
     <>
-      <Topbar />
+      {user?.logged && <Topbar />}
       <div className="homeContainer flex w-full">
-        <Sidebar />
-        {/* <div className=" flex-[5.5] bg-violet-800">dsa</div> */}
-        {/* md:block pero debe estar en flex */}
-        <Feed />
-        {/* <div className="hidden md:block flex-[3.5] bg-red-700">dsad</div> */}
-        <Rightbar />
+        {user?.logged && <Sidebar />}
+        {user?.logged && <Feed />}
+        {/*   <Sidebar />
+        <Feed username={false} />
+        <Rightbar /> */}
+        {user?.logged && <Rightbar />}
       </div>
     </>
   );

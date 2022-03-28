@@ -27,4 +27,4 @@ const aPut = async (url, data) => {
 };
 
 export default instance;
-export { aGet, aPost };
+export { aGet, aPost, aPut };
