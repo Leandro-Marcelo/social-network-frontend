@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
-import { Users } from "../dummyData";
 import Online from "./Online";
 import { useEffect, useState } from "react";
 import { aGet, aPut } from "../axios";
@@ -11,7 +10,7 @@ export default function Rightbar({ profileUser }) {
   const [friends, setFriends] = useState(null);
   const [followed, setFollowed] = useState(false);
   const [usersList, setUsersList] = useState([]);
-
+  console.log(`este es el valor de friends:`, friends);
   useEffect(() => {
     let isCancelled = false;
     const getUsers = async () => {
@@ -26,7 +25,6 @@ export default function Rightbar({ profileUser }) {
     if (user?.loggedUser?.username) {
       getUsers();
     }
-    console.log(usersList);
 
     return () => {
       isCancelled = true;
@@ -34,7 +32,6 @@ export default function Rightbar({ profileUser }) {
   }, []);
 
   useEffect(() => {
-    console.log(`ejecuto useEffect de getFriends`);
     let isCancelled = false;
     const getFriends = async () => {
       const friendList = await aGet("api/users/friend/" + profileUser._id);
@@ -53,7 +50,6 @@ export default function Rightbar({ profileUser }) {
   }, [profileUser?._id]);
 
   useEffect(() => {
-    console.log(`ejecuto useEffect de setFollowed()`);
     if (profileUser?._id) {
       setFollowed(profileUser.followers.includes(user.loggedUser?._id));
     }

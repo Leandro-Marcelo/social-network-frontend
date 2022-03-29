@@ -9,7 +9,6 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-import { Users } from "../dummyData";
 import CloseFriend from "./CloseFriend";
 import { useEffect, useState } from "react";
 import { aGet } from "../axios";
@@ -18,16 +17,9 @@ import { useSelector } from "react-redux";
 export default function Sidebar() {
   const user = useSelector((state) => state.user);
   const [usersList, setUsersList] = useState([]);
-  console.log(usersList);
-  console.log(user);
   useEffect(() => {
-    console.log(`se ejecuta el useEffect de getUser`);
     let isCancelled = false;
     const getUsers = async () => {
-      console.log(
-        `getUsers se ejecutró desde sidebARS`,
-        typeof user.loggedUser.username
-      );
       const usersList = await aGet(
         `api/users/all/users?username=${user.loggedUser.username}`
       );
@@ -37,7 +29,6 @@ export default function Sidebar() {
     };
 
     if (user?.loggedUser?.username) {
-      console.log(user.loggedUser.username);
       getUsers();
     }
 

@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { validate } from "./userSlice";
 import Casa from "./pages/Casa";
@@ -16,7 +15,7 @@ function App() {
     dispatch(validate());
   }, []);
 
-  const user = useSelector((state) => state.user);
+  /*   const user = useSelector((state) => state.user); */
   /* console.log(`estados viendolos de app`, user); */
 
   return (
