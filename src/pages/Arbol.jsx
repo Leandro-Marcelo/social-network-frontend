@@ -34,21 +34,28 @@ export default Arbol;
     return () => {
       isCancelled = true;
     };
-  }, [user?.loggedUser?.username]);
+  }, [user?.loggedUser?.username]); */
 
+/* 
+línea 14 rightbar
+ useEffect(() => {
+    let isCancelled = false;
+    const getUsers = async () => {
+      const usersList = await aGet(
+        `api/users/all/users?username=${user.loggedUser.username}`
+      );
+      if (!isCancelled) {
+        setUsersList(usersList.data);
+      }
+    };
 
+    if (user?.loggedUser?.username) {
+      getUsers();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
 */

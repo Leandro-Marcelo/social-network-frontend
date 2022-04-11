@@ -11,25 +11,24 @@ export default function Rightbar({ profileUser }) {
   const [followed, setFollowed] = useState(false);
   const [usersList, setUsersList] = useState([]);
   console.log(`este es el valor de friends:`, friends);
+
   useEffect(() => {
     let isCancelled = false;
-    const getUsers = async () => {
-      const usersList = await aGet(
-        `api/users/all/users?username=${user.loggedUser.username}`
-      );
+    const getFriendsCurrentUser = async () => {
+      const usersList = await aGet("api/users/friend/" + user.loggedUser._id);
       if (!isCancelled) {
         setUsersList(usersList.data);
       }
     };
 
-    if (user?.loggedUser?.username) {
-      getUsers();
+    if (user.loggedUser?._id) {
+      getFriendsCurrentUser();
     }
 
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [user.loggedUser?._id]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -143,7 +142,7 @@ export default function Rightbar({ profileUser }) {
         </h4>
         {/* flex flex-wrap justify-between */}
         {/* validación de 12 sino me rompe la ui */}
-        <div className="rightbarFollowings mb-3 grid grid-cols-3 justify-items-center">
+        <div className="rightbarFollowings mb-3 grid grid-cols-3 justify-items-center text-center">
           {friends &&
             friends.map((friend) => {
               return (
