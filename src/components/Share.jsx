@@ -1,18 +1,18 @@
-import {
-    PermMedia,
-    Label,
-    Room,
-    EmojiEmotions,
-    Cancel,
-} from "@material-ui/icons";
-import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { aPost } from "../axios";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
+import LabelIcon from "@mui/icons-material/Label";
+import RoomIcon from "@mui/icons-material/Room";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+/* pendiente */
+/* import CancelIcon from "@mui/icons-material/Cancel"; */
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../features/post/postSlice";
+import { Link } from "react-router-dom";
 
-export default function Share({ updatedPost }) {
+export default function Share() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const user = useSelector((state) => state.user);
-    const loggedUser = user.loggedUser;
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
     /* pendiente */
     /* const [file, setFile] = useState(null); */
 
@@ -26,16 +26,18 @@ export default function Share({ updatedPost }) {
     const handleSubmit = async () => {
         //como chota puedo saber que tiene dentro el formData este xd
         const newPost = new FormData();
-        newPost.append("userId", loggedUser._id);
+        newPost.append("userId", auth.user._id);
         newPost.append("desc", credentials.desc);
         newPost.append("img", credentials.img);
-        console.log(loggedUser._id, credentials.desc, credentials.img);
-        await aPost(PF + "/api/posts/", newPost);
-        updatedPost();
-        /* dispatch(signUp(user)); */
-
-        //redireccionarlo
-        //handleClose();
+        /* console.log(currentUserId._id, credentials.desc, credentials.img); *
+        /* tendría que validar que todos tengan un nombre o me rompe el backend xd */
+        const userData = {
+            _id: auth.user._id,
+            name: auth.user.name,
+            img: auth.user.img ? auth.user.img : "/files/noAvatar.png",
+        };
+        dispatch(createPost({ newPost, userData }));
+        setCredentials(initialState);
     };
 
     const handleChange = (e) => {
@@ -51,49 +53,26 @@ export default function Share({ updatedPost }) {
             img: img,
         });
     };
-
-    /*  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newPost = {
-      userId: loggedUser._id,
-      desc: desc.current.value,
-    };
-    if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
-      try {
-        await aPost("api/upload", data);
-      } catch (err) {}
-      setFile(!file);
-    }
-    try {
-     // podríamos crear un posts context y de ahí actualizar el estado del post
-      await aPost(`api/posts`, newPost);
-      updatedPost();
-      desc.current.value = "";
-    } catch (err) {
-      console.log(err);
-    }
-  }; */
     return (
         <div className="share w-full  rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)]">
             <div className="shareWrapper py-3 px-3">
                 <div className="shareTop flex items-center">
-                    <img
-                        className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
-                        src={
-                            loggedUser?.profilePicture ||
-                            PF + "/files/noAvatar.png"
-                        }
-                        alt="person1"
-                    />
+                    <Link to={`/profile/${auth.user.name}`}>
+                        <img
+                            className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
+                            src={
+                                auth.user.img
+                                    ? PF + auth.user.img
+                                    : PF + "/files/noAvatar.png"
+                            }
+                            alt="person1"
+                        />
+                    </Link>
 
                     <input
-                        placeholder={`What's in your mind ${loggedUser?.username}?`}
+                        placeholder={`What's in your mind ${
+                            auth.user.name ? auth.user.username : "invitado"
+                        }?`}
                         className="shareInput border-none w-[80%] focus:outline-none  text-[15px]"
                         value={credentials.desc}
                         name={"desc"}
@@ -124,7 +103,7 @@ export default function Share({ updatedPost }) {
                             htmlFor="img"
                             className="file shareOption flex items-center mr-4 cursor-pointer"
                         >
-                            <PermMedia
+                            <PermMediaIcon
                                 htmlColor="tomato"
                                 className="shareIcon mr-1"
                             />
@@ -144,8 +123,8 @@ export default function Share({ updatedPost }) {
                                 }
                             />
                         </label>
-                        <div className="shareOption flex items-center mr-4 cursor-pointer">
-                            <Label
+                        <div className="shareOption flex items-center mr-4 ">
+                            <LabelIcon
                                 htmlColor="blue"
                                 className="shareIcon mr-1"
                             />
@@ -153,8 +132,8 @@ export default function Share({ updatedPost }) {
                                 Tag
                             </span>
                         </div>
-                        <div className="shareOption flex items-center mr-4 cursor-pointer">
-                            <Room
+                        <div className="shareOption flex items-center mr-4 ">
+                            <RoomIcon
                                 htmlColor="green"
                                 className="shareIcon mr-1"
                             />
@@ -162,8 +141,8 @@ export default function Share({ updatedPost }) {
                                 Location
                             </span>
                         </div>
-                        <div className="shareOption flex items-center mr-4 cursor-pointer">
-                            <EmojiEmotions
+                        <div className="shareOption flex items-center mr-4 ">
+                            <EmojiEmotionsIcon
                                 htmlColor="goldenrod"
                                 className="shareIcon mr-1"
                             />

@@ -2,32 +2,30 @@ import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
 import Topbar from "../components/Topbar";
-/* import { useEffect } from "react"; */
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-/* import { useNavigate } from "react-router-dom"; */
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const user = useSelector((state) => state.user);
-  /*   const navigate = useNavigate(); */
+    const auth = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
-  /* agregar el logout  */
-  /*   useEffect(() => {
-    if (!user.logged) {
-      navigate("/login");
-    }
-  }, []); */
+    /* agregar el logout  */
+    useEffect(() => {
+        if (auth.logged === false) navigate("/login");
+    }, [auth]);
 
-  return (
-    <>
-      {user?.logged && <Topbar />}
-      <div className="homeContainer flex w-full">
-        {user?.logged && <Sidebar />}
-        {user?.logged && <Feed />}
-        {/*   <Sidebar />
-        <Feed username={false} />
-        <Rightbar /> */}
-        {user?.logged && <Rightbar />}
-      </div>
-    </>
-  );
+    return (
+        <>
+            {auth.logged && <Topbar />}
+            <div className="homeContainer flex w-full">
+                {auth.logged && <Sidebar />}
+                {auth.logged && <Feed />}
+                {/*   <Sidebar /> */}
+                {/* <Feed username={false} />
+                <Rightbar /> */}
+                {auth.logged && <Rightbar />}
+            </div>
+        </>
+    );
 }

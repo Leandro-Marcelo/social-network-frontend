@@ -6,13 +6,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/auth/authSlice";
 import { Alert, CircularProgress } from "@mui/material";
-import { useEffect } from "react";
+import { signUp } from "../features/auth/authSlice";
 
 export default function SignInSide() {
     const theme = createTheme();
@@ -20,27 +19,32 @@ export default function SignInSide() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     /* console.log(auth.logged); */
-
     useEffect(() => {
-        console.log(`se imprime?`, auth.logged);
         if (auth.logged) navigate("/home");
     }, [auth]);
 
+    /* Otra forma de registrarse sería hacer todo en el evento sign in / submit, es decir, agarrar recien los datos ya que probablemente son los finales y crearlo, pero la ventaja de que esten controlados es que puedo hacer validaciones */
     const initialState = {
+        name: "",
         email: "",
         password: "",
+        img: null,
     };
 
-    /* useEffect(() => {
-        if (user.logged) {
-            navigate("/");
-        }
-    }, [user]); */
-
     const [credentials, setCredentials] = useState(initialState);
-
     const handleSubmit = () => {
-        dispatch(login(credentials));
+        //como chota puedo saber que tiene dentro el formData este xd
+        const user = new FormData();
+        user.append("name", credentials.name);
+        user.append("email", credentials.email);
+        user.append("password", credentials.password);
+        user.append("img", credentials.img);
+
+        console.log(credentials);
+        dispatch(signUp(user));
+
+        //redireccionarlo
+        //handleClose();
     };
 
     const handleChange = (e) => {
@@ -50,11 +54,10 @@ export default function SignInSide() {
         });
     };
 
-    const demoAccount = () => {
+    const handleChangeFile = (img) => {
         setCredentials({
             ...credentials,
-            email: "leandro@gmail.com",
-            password: "leandro123",
+            img: img,
         });
     };
 
@@ -95,24 +98,27 @@ export default function SignInSide() {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            Width: "100%",
                         }}
                     >
-                        <Typography component="h1" variant="h4">
-                            Login
-                        </Typography>
-                        {/*  <Typography component="h1" variant="h4">
-                            Login First
+                        {/* <Typography component="h1" variant="h4">
+                            Welcome to LeanWorkflow!
                         </Typography> */}
-
-                        <Box component="div" noValidate sx={{ mt: 1 }}>
-                            <Button
-                                variant="contained"
-                                endIcon={<AccountCircleIcon />}
-                                onClick={demoAccount}
-                            >
-                                Demo account
-                            </Button>
+                        <Typography component="h1" variant="h4">
+                            Sign Up
+                        </Typography>
+                        <Box noValidate sx={{ mt: 1 }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="name"
+                                label="Name"
+                                name="name"
+                                autoComplete="name"
+                                autoFocus
+                                value={credentials.name}
+                                onChange={handleChange}
+                            />
                             <TextField
                                 margin="normal"
                                 required
@@ -121,7 +127,6 @@ export default function SignInSide() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
-                                autoFocus
                                 value={credentials.email}
                                 onChange={handleChange}
                             />
@@ -129,36 +134,55 @@ export default function SignInSide() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="password"
-                                label="Password"
                                 name="password"
+                                label="Password"
                                 type="password"
+                                id="password"
                                 autoComplete="current-password"
                                 value={credentials.password}
                                 onChange={handleChange}
                             />
-                            {auth.message ? (
-                                <Alert
-                                    severity="error"
-                                    /* absolute bottom-[48vh]  w-[300px] sm:w-[320px] */
-                                    className="absolute bottom-[48vh]  w-[300px] sm:w-[320px] "
+                            {/* No abarca todo el boton, solamente cuando aparece la manito */}
+                            <Button
+                                fullWidth
+                                variant="outlined"
+                                sx={{ cursor: "default", marginTop: 2 }}
+                            >
+                                <label
+                                    htmlFor="img"
+                                    className="file w-full cursor-pointer"
                                 >
-                                    {auth.message}
+                                    <input
+                                        className="hidden "
+                                        id="img"
+                                        name="img"
+                                        type="file"
+                                        onChange={(e) =>
+                                            handleChangeFile(e.target.files[0])
+                                        }
+                                        /* accept=".png,.jpeg,.jpg" */
+                                    />
+                                    <AddIcon /> Subir Imagen
+                                </label>
+                            </Button>
+                            {auth.signUpError ? (
+                                <Alert severity="error">
+                                    {auth.signUpError}
                                 </Alert>
                             ) : null}
                             <Button
-                                onClick={handleSubmit}
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 1 }}
+                                onClick={handleSubmit}
                             >
-                                {auth.status === "pending" ? (
+                                {auth.signUpStatus === "pending" ? (
                                     <CircularProgress
                                         color="inherit"
                                         size={30}
                                     />
                                 ) : (
-                                    "Login"
+                                    "Sign Up"
                                 )}
                             </Button>
                             <Typography
@@ -167,10 +191,10 @@ export default function SignInSide() {
                                 color="primary"
                             >
                                 <Link
-                                    to={"/signup"}
+                                    to={"/login"}
                                     style={{ textDecoration: "none" }}
                                 >
-                                    Dont have an account? Sign Up
+                                    Already have an account Login Now
                                 </Link>
                             </Typography>
                         </Box>

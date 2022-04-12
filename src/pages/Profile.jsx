@@ -3,29 +3,28 @@ import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
 import { useEffect, useState } from "react";
-import { aGet } from "../axios/index";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { userProfileData } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const [user, setUser] = useState({});
-    const username = useParams().username;
+    const user = useSelector((state) => state.user);
+    const auth = useSelector((state) => state.auth);
+    const nameParams = useParams().name;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        let isCancelled = false;
-        const fetchUser = async () => {
-            const res = await aGet(`api/users?username=${username}`);
-            if (!isCancelled) {
-                setUser(res.data);
-            }
-        };
+        if (auth.logged === false) navigate("/login");
+    }, [auth]);
 
-        fetchUser();
-        /*  si la database cambiará el id, sería correcto volver a renderizar todo */
-        return () => {
-            isCancelled = true;
-        };
-    }, [username]);
+    useEffect(() => {
+        console.log(`ESTO SE EJECUTA?`);
+        dispatch(userProfileData(nameParams));
+    }, [nameParams]);
+
     return (
         <>
             <Topbar />
@@ -38,8 +37,9 @@ export default function Profile() {
                                 className="profileCoverImg w-full h-[250px] object-cover "
                                 /* revisar si funciona el cover por defecto */
                                 src={
-                                    user.coverPicture ||
-                                    PF + "/files/noCover.png"
+                                    user.userProfileData.coverPicture
+                                        ? PF + user.userProfileData.coverPicture
+                                        : PF + "/files/noCover.png"
                                 }
                                 alt="cover"
                             />
@@ -47,24 +47,29 @@ export default function Profile() {
                                 className="profileUserImg w-[150px] h-[150px] rounded-[50%] object-cover absolute left-0 right-0 mx-auto top-[150px] border-[3px] border-white bg-white"
                                 /* revisar si funciona el profile por defecto */
                                 src={
-                                    user.profilePicture ||
-                                    PF + "/files/noAvatar.png"
+                                    user.userProfileData.img
+                                        ? PF + user.userProfileData.img
+                                        : PF + "/files/noAvatar.png"
                                 }
                                 alt="profile"
                             />
                         </div>
                         <div className="profileInfo flex flex-col justify-center items-center">
                             <h4 className="profileInfoName text-2xl">
-                                {user.username}
+                                {user.userProfileData.name}
                             </h4>
                             <span className="profileInfoDesc font-light">
-                                {user.desc}
+                                {user.userProfileData.desc}
                             </span>
                         </div>
                     </div>
                     <div className="profileRightBottom flex">
-                        <Feed username={username} />
-                        <Rightbar profileUser={user} />
+                        {user.userProfileData.name && (
+                            <Feed name={user.userProfileData.name} />
+                        )}
+                        {user.userProfileData._id && (
+                            <Rightbar profileId={user.userProfileData._id} />
+                        )}
                     </div>
                 </div>
             </div>

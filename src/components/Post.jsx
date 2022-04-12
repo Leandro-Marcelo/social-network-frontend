@@ -1,56 +1,62 @@
-import { MoreVert } from "@material-ui/icons";
+/* import { MoreVert } from "@material-ui/icons"; */
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { aGet, aPut } from "../axios/index";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { likeIt } from "../features/post/postSlice";
 export default function Post({ post }) {
-    console.log(post);
+    /* console.log(`esto llega en post`, post); */
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
-    const [postCreator, setPostCreator] = useState({});
+    // Al hacer un populate de userId, me evito hacer peticiones de traer los creator del post
+    /*    const [creator, setCreator] = useState({}); */
+    const dispatch = useDispatch();
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const user = useSelector((state) => state.user);
-    const loggedUser = user.loggedUser;
+    const auth = useSelector((state) => state.auth);
 
     /* agrego este useEffect porque sino podría darle like dos veces, actualizar la pagina y volver a darle like, con esto decimos si en post.likes que es un array incluye este id del usuario logeado, entonces es true y cuando clickee, le va a restar 1*/
-    useEffect(() => {
+    /* useEffect(() => {
         setIsLiked(post.likes.includes(loggedUser._id));
-    }, [loggedUser._id, post.likes]);
+    }, [loggedUser._id, post.likes]); */
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            const res = await aGet(`api/users?userId=${post.userId}`);
-            setPostCreator(res.data);
-        };
-        fetchUser();
+    /*   useEffect(() => {
+        dispatch(postCreator(post.userId));
         //si la database cambiará el id, sería correcto volver a renderizar todo
-    }, [post.userId]);
+    }, []); */
+
+    /* si dejo esto tal cual, se renderiza el componente, pero luego lo actualizo, entonces se renderiza y luego lo actualizo y así infinitamente, por eso es importante ponerlo en un useEffect */
+    useEffect(() => {
+        /* console.log(`me ejecutoooooooo`); */
+        setIsLiked(post.likes.includes(auth.user._id));
+        setLike(post.likes.length);
+        /* auth */
+    }, [post.likes]);
 
     const likeHandler = async () => {
-        await aPut(`api/posts/${post._id}/like`, {
-            userId: loggedUser._id,
-        });
+        dispatch(likeIt({ postId: post._id, userId: auth.user._id }));
+        /* esto va para el extra reducers, no hace falta, con actualizarlo mas que sobra */
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked);
     };
-    console.log(`PF`, PF);
+
     return (
         <div className="post w-full rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)] my-8 mx-0">
             <div className="postWrapper px-3 py-3">
                 <div className="postTop flex items-center justify-between">
                     <div className="postTopLeft flex items-center ml-2">
-                        <Link to={`/profile/${postCreator.username}`}>
+                        <Link to={`/profile/${post.userId.name}`}>
                             <img
                                 className="postProfileImg w-8 h-8 rounded-[50%] object-cover"
                                 src={
-                                    postCreator.profilePicture ||
-                                    PF + "/files/noAvatar.png"
+                                    post.userId.img
+                                        ? PF + post.userId.img
+                                        : PF + "/files/noAvatar.png"
                                 }
                                 alt=""
                             />
                         </Link>
                         <span className="postUsername text-[15px] font-medium my-0 mx-3">
-                            {postCreator.username}
+                            {post.userId.name}
                         </span>
                         {/* encontrar un format */}
                         <span className="postDate text-[12px]">
@@ -58,7 +64,7 @@ export default function Post({ post }) {
                         </span>
                     </div>
                     <div className="postTopRight">
-                        <MoreVert />
+                        <MoreVertIcon />
                     </div>
                 </div>
                 <div className="postCenter mx-2 my-4">
@@ -90,7 +96,7 @@ export default function Post({ post }) {
                         </span>
                     </div>
                     <div className="postBottomRight">
-                        <span className="postCommentText cursor-pointer border-b border-gray-400">
+                        <span className="postCommentText border-b border-gray-400">
                             {post.comment} comments
                         </span>
                     </div>
