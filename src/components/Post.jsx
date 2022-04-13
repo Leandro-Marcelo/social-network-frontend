@@ -59,9 +59,9 @@ export default function Post({ post }) {
                             {post.userId.name}
                         </span>
                         {/* encontrar un format */}
-                        <span className="postDate text-[12px]">
+                        {/* <span className="postDate text-[12px]">
                             {post.createdAt}
-                        </span>
+                        </span> */}
                     </div>
                     <div className="postTopRight">
                         <MoreVertIcon />

@@ -15,12 +15,8 @@ export const usersList = createAsyncThunk(
     async (name, { rejectWithValue }) => {
         try {
             const response = await aGet(`/users/all/users?name=${name}`);
-
-            console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -29,15 +25,11 @@ export const usersList = createAsyncThunk(
 export const userProfileData = createAsyncThunk(
     "user/userProfileData",
     async (name, { rejectWithValue }) => {
-        console.log(name);
         try {
             const response = await aGet(`/users?name=${name}`);
 
-            console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -49,11 +41,9 @@ export const getFriends = createAsyncThunk(
     async (userId, { rejectWithValue }) => {
         try {
             const response = await aGet("/users/friend/" + userId);
-            console.log(response.data);
+
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -66,11 +56,9 @@ export const follow = createAsyncThunk(
             const response = await aPut(`/users/${profileId}/follow`, {
                 userId: userId,
             });
-            console.log(response.data);
+
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -83,11 +71,9 @@ export const unfollow = createAsyncThunk(
             const response = await aPut(`/users/${profileId}/unfollow`, {
                 userId: userId,
             });
-            console.log(response.data);
+
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -106,7 +92,6 @@ const userSlice = createSlice({
             };
         },
         [usersList.fulfilled]: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 usersList: action.payload,
@@ -129,7 +114,6 @@ const userSlice = createSlice({
             };
         },
         [userProfileData.fulfilled]: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 userProfileData: action.payload,
@@ -152,7 +136,6 @@ const userSlice = createSlice({
             };
         },
         [getFriends.fulfilled]: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 friendsList: action.payload.followings,
@@ -175,7 +158,6 @@ const userSlice = createSlice({
             };
         },
         [follow.fulfilled]: (state, action) => {
-            console.log(JSON.stringify(state.userProfileData));
             return {
                 ...state,
                 status: "success",
@@ -197,7 +179,6 @@ const userSlice = createSlice({
             };
         },
         [unfollow.fulfilled]: (state, action) => {
-            console.log(JSON.stringify(state.userProfileData));
             return {
                 ...state,
                 status: "success",

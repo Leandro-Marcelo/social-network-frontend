@@ -20,7 +20,7 @@ export default function SignInSide() {
     const navigate = useNavigate();
     /* console.log(auth.logged); */
     useEffect(() => {
-        if (auth.logged) navigate("/home");
+        if (auth.logged) navigate("/");
     }, [auth]);
 
     /* Otra forma de registrarse sería hacer todo en el evento sign in / submit, es decir, agarrar recien los datos ya que probablemente son los finales y crearlo, pero la ventaja de que esten controlados es que puedo hacer validaciones */
@@ -40,7 +40,7 @@ export default function SignInSide() {
         user.append("password", credentials.password);
         user.append("img", credentials.img);
 
-        console.log(credentials);
+        /* console.log(credentials); */
         dispatch(signUp(user));
 
         //redireccionarlo
@@ -72,7 +72,7 @@ export default function SignInSide() {
                     md={7}
                     sx={{
                         backgroundImage:
-                            "url(https://source.unsplash.com/random)",
+                            "url(https://images.unsplash.com/photo-1562577309-4932fdd64cd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80)",
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"
@@ -162,12 +162,12 @@ export default function SignInSide() {
                                         }
                                         /* accept=".png,.jpeg,.jpg" */
                                     />
-                                    <AddIcon /> Subir Imagen
+                                    <AddIcon /> Profile Picture
                                 </label>
                             </Button>
-                            {auth.signUpError ? (
-                                <Alert severity="error">
-                                    {auth.signUpError}
+                            {auth.statusSignUp === "rejected" ? (
+                                <Alert severity="error" className="mt-6">
+                                    {auth.messageSignUp}
                                 </Alert>
                             ) : null}
                             <Button

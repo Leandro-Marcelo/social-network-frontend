@@ -21,7 +21,7 @@ export default function Profile() {
     }, [auth]);
 
     useEffect(() => {
-        console.log(`ESTO SE EJECUTA?`);
+        /* console.log(`ESTO SE EJECUTA?`); */
         dispatch(userProfileData(nameParams));
     }, [nameParams]);
 

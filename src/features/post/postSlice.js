@@ -18,18 +18,14 @@ const initialState = {
 export const getPostsName = createAsyncThunk(
     "post/getPostsName",
     async ({ name }, { rejectWithValue }) => {
-        console.log(name);
         try {
             const response = await aGet("/posts/profile/" + name);
 
-            console.log(response.data);
             return response.data.sort(
                 (post1, post2) =>
                     new Date(post2.createdAt) - new Date(post1.createdAt)
             );
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -38,18 +34,14 @@ export const getPostsName = createAsyncThunk(
 export const getPostsHome = createAsyncThunk(
     "post/getPostsHome",
     async ({ idUser }, { rejectWithValue }) => {
-        console.log(idUser);
         try {
             const response = await aGet("/posts/timeline/" + idUser);
 
-            console.log(response.data);
             return response.data.sort(
                 (post1, post2) =>
                     new Date(post2.createdAt) - new Date(post1.createdAt)
             );
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -82,11 +74,8 @@ export const createPost = createAsyncThunk(
             const response = await aPost("/posts/", newPost);
 
             const responseData = { ...response.data, userId: { ...userData } };
-            console.log(responseData);
             return responseData;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -105,11 +94,8 @@ export const likeIt = createAsyncThunk(
                 userId,
                 likeIt: response.data.likeIt,
             };
-            console.log(responseData);
             return responseData;
         } catch (error) {
-            console.log(error.response.data);
-
             return rejectWithValue(error.response?.data);
         }
     }
@@ -137,7 +123,6 @@ const postSlice = createSlice({
             };
         },
         [getPostsName.fulfilled]: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 posts: action.payload,
@@ -161,7 +146,6 @@ const postSlice = createSlice({
             };
         },
         [getPostsHome.fulfilled]: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 posts: action.payload,
@@ -212,7 +196,6 @@ const postSlice = createSlice({
         [likeIt.fulfilled]: (state, action) => {
             /* arreglar lo de los post nuevos arribas, agregarle tambien el sort al otro, a pesar de que al crear lo ponga primero */
             const { postId, userId, likeIt } = action.payload;
-            console.log(postId, userId, likeIt);
             const filteredPost = state.posts.filter(
                 (post) => post._id === postId
             );
@@ -242,7 +225,6 @@ const postSlice = createSlice({
                 );
             }
 
-            console.log(JSON.stringify(updatedPosts));
             return {
                 ...state,
                 /* posts: updatedPosts, */

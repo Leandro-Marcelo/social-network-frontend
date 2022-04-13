@@ -22,8 +22,8 @@ export default function SignInSide() {
     /* console.log(auth.logged); */
 
     useEffect(() => {
-        console.log(`se imprime?`, auth.logged);
-        if (auth.logged) navigate("/home");
+        /*      console.log(`se imprime?`, auth.logged); */
+        if (auth.logged) navigate("/");
     }, [auth]);
 
     const initialState = {
@@ -69,7 +69,7 @@ export default function SignInSide() {
                     md={7}
                     sx={{
                         backgroundImage:
-                            "url(https://source.unsplash.com/random)",
+                            "url(https://images.unsplash.com/photo-1562577309-4932fdd64cd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80)",
                         backgroundRepeat: "no-repeat",
                         backgroundColor: (t) =>
                             t.palette.mode === "light"
@@ -137,13 +137,13 @@ export default function SignInSide() {
                                 value={credentials.password}
                                 onChange={handleChange}
                             />
-                            {auth.message ? (
+                            {auth.statusLogin === "rejected" ? (
                                 <Alert
                                     severity="error"
                                     /* absolute bottom-[48vh]  w-[300px] sm:w-[320px] */
                                     className="absolute bottom-[48vh]  w-[300px] sm:w-[320px] "
                                 >
-                                    {auth.message}
+                                    {auth.messageLogin}
                                 </Alert>
                             ) : null}
                             <Button
@@ -152,7 +152,7 @@ export default function SignInSide() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                {auth.status === "pending" ? (
+                                {auth.statusLogin === "pending" ? (
                                     <CircularProgress
                                         color="inherit"
                                         size={30}

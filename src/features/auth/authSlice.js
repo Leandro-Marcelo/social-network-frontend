@@ -6,19 +6,22 @@ const initialState = {
     user: [],
     status: "",
     message: "",
+    statusSignUp: "",
+    statusLogin: "",
+    messageLogin: "",
+    messageSignUp: "",
     /* error: true, */
 };
 
 export const login = createAsyncThunk(
     "auth/login",
     async (credentials, { rejectWithValue }) => {
-        console.log(`que llega`, credentials);
         try {
             const response = await aPost("/auth/login", credentials);
-            console.log(response.data);
+            //console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
+            //console.log(error.response.data);
             return rejectWithValue(error.response?.data);
         }
     }
@@ -29,10 +32,10 @@ export const signUp = createAsyncThunk(
     async (user, { rejectWithValue }) => {
         try {
             const response = await aPost("/auth/signup", user);
-            console.log(response.data);
+            //console.log(response.data);
             return response.data;
         } catch (error) {
-            console.log(error.response.data);
+            //console.log(error.response.data);
             return rejectWithValue(error.response?.data);
         }
     }
@@ -43,11 +46,11 @@ export const logout = createAsyncThunk(
     async (noData, { rejectWithValue }) => {
         try {
             const response = await aPost("/auth/logout");
-            console.log(response.data);
+            //console.log(response.data);
             return response.data;
         } catch (error) {
             /* el backend no responde con nada si es rejected, es decir, si vamos a validateee */
-            console.log(error.response.data);
+            //console.log(error.response.data);
             /* mandamos como action.payload el error que nos retorna el backend */
             return rejectWithValue(error.response?.data);
         }
@@ -59,11 +62,11 @@ export const validate = createAsyncThunk(
     async (noData, { rejectWithValue }) => {
         try {
             const response = await aPost("/auth/validate");
-            console.log(response.data);
+            //console.log(response.data);
             return response.data;
         } catch (error) {
             /* el backend no responde con nada si es rejected, es decir, si vamos a validateee */
-            console.log(error.response.data);
+            //  console.log(error.response.data);
             /* mandamos como action.payload el error que nos retorna el backend */
             return rejectWithValue(error.response?.data);
         }
@@ -83,21 +86,21 @@ const authSlice = createSlice({
                 /* name */
                 user: [],
                 /* isFetching */
-                status: "pending",
+                statusLogin: "pending",
                 /* message */
-                message: "",
+                messageLogin: "",
             };
         },
         [login.fulfilled]: (state, action) => {
-            console.log(action.payload);
+            /* console.log(action.payload); */
             return {
                 ...state,
                 logged: action.payload.success,
                 user: action.payload.user,
                 /* isFetching */
-                status: "success",
+                statusLogin: "success",
                 /* message */
-                message: "",
+                messageLogin: "",
             };
         },
         [login.rejected]: (state, action) => {
@@ -107,9 +110,9 @@ const authSlice = createSlice({
                 user: [],
                 /* dependiendo de si fue fulfilled o rejected, mostrara un mensaje */
                 /* isFetching */
-                status: "rejected",
+                statusLogin: "rejected",
                 /* message */
-                message: action.payload.message,
+                messageLogin: action.payload.message,
             };
         },
         [signUp.pending]: (state, action) => {
@@ -119,9 +122,9 @@ const authSlice = createSlice({
                 user: [],
                 /* dependiendo de si fue fulfilled o rejected, mostrara un mensaje */
                 /* isFetching */
-                status: "pending",
+                statusSignUp: "pending",
                 /* message */
-                message: "",
+                messageSignUp: "",
             };
         },
         [signUp.fulfilled]: (state, action) => {
@@ -131,9 +134,9 @@ const authSlice = createSlice({
                 user: action.payload.user,
 
                 /* isFetching */
-                status: "success",
+                statusSignUp: "success",
                 /* message */
-                message: "",
+                messageSignUp: "",
             };
         },
         [signUp.rejected]: (state, action) => {
@@ -143,9 +146,9 @@ const authSlice = createSlice({
                 user: [],
                 /* dependiendo de si fue fulfilled o rejected, mostrara un mensaje */
                 /* isFetching */
-                status: "rejected",
+                statusSignUp: "rejected",
                 /* message */
-                message: "",
+                messageSignUp: action.payload.message,
             };
         },
 
@@ -168,6 +171,10 @@ const authSlice = createSlice({
                 status: "success",
                 /* message */
                 message: "",
+                statusLogin: "",
+                statusSignUp: "",
+                messageSignUp: "",
+                messageLogin: "",
             };
         },
         [logout.rejected]: (state, action) => {
@@ -194,7 +201,7 @@ const authSlice = createSlice({
             };
         },
         [validate.fulfilled]: (state, action) => {
-            console.log(`que llega acá:`, action.payload);
+            /* console.log(`que llega acá:`, action.payload); */
             // state.todos.push(action.payload);
             return {
                 ...state,

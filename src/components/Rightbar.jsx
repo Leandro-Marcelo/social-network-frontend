@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { follow, getFriends, unfollow } from "../features/user/userSlice";
 
 export default function Rightbar({ profileId }) {
-    console.log(`profileId`, profileId);
+    /*  console.log(`profileId`, profileId); */
     const auth = useSelector((state) => state.auth);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -17,10 +17,10 @@ export default function Rightbar({ profileId }) {
 
     useEffect(() => {
         if (profileId) {
-            console.log(`USER PROFILE DATA`);
+            /* console.log(`USER PROFILE DATA`); */
             dispatch(getFriends(profileId));
         } else {
-            console.log(`AUTH USER ID`);
+            /*     console.log(`AUTH USER ID`); */
             dispatch(getFriends(auth.user._id));
         }
     }, [auth.user._id, profileId]);
@@ -74,7 +74,7 @@ export default function Rightbar({ profileId }) {
 
     useEffect(() => {
         if (profileId) {
-            console.log(`el segundo useefect se ejecuta?`);
+            /*  console.log(`el segundo useefect se ejecuta?`); */
             setFollowed(user.userProfileData.followers.includes(auth.user._id));
         }
     }, [user.userProfileData]);
@@ -122,9 +122,8 @@ export default function Rightbar({ profileId }) {
                     src={PF + "/files/ad.png"}
                     alt=""
                 />
-                <h4 className="rightbarTitle mb-5 font-bold text-xl">
-                    Online Friend
-                </h4>
+                {/* Online Friend */}
+                <h4 className="rightbarTitle mb-5 font-bold text-xl">Online</h4>
                 <ul className="rightbarFriendList">
                     {user.friendsList.length > 0 &&
                         user.friendsList.map((friend) => (
@@ -182,8 +181,9 @@ export default function Rightbar({ profileId }) {
                         </span>
                     </div> */}
                 </div>
+                {/* User friends */}
                 <h4 className="rightbarTitle text-xl font-medium mb-3 ml-11">
-                    User friends
+                    Following
                 </h4>
                 {/* flex flex-wrap justify-between */}
                 {/* validación de 12 sino me rompe la ui */}
