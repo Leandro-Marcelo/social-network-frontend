@@ -100,9 +100,6 @@ export default function SignInSide() {
                             alignItems: "center",
                         }}
                     >
-                        {/* <Typography component="h1" variant="h4">
-                            Welcome to LeanWorkflow!
-                        </Typography> */}
                         <Typography component="h1" variant="h4">
                             Sign Up
                         </Typography>

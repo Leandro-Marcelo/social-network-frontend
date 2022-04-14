@@ -5,31 +5,15 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { likeIt } from "../features/post/postSlice";
 export default function Post({ post }) {
-    /* console.log(`esto llega en post`, post); */
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
-    // Al hacer un populate de userId, me evito hacer peticiones de traer los creator del post
-    /*    const [creator, setCreator] = useState({}); */
     const dispatch = useDispatch();
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const auth = useSelector((state) => state.auth);
 
-    /* agrego este useEffect porque sino podría darle like dos veces, actualizar la pagina y volver a darle like, con esto decimos si en post.likes que es un array incluye este id del usuario logeado, entonces es true y cuando clickee, le va a restar 1*/
-    /* useEffect(() => {
-        setIsLiked(post.likes.includes(loggedUser._id));
-    }, [loggedUser._id, post.likes]); */
-
-    /*   useEffect(() => {
-        dispatch(postCreator(post.userId));
-        //si la database cambiará el id, sería correcto volver a renderizar todo
-    }, []); */
-
-    /* si dejo esto tal cual, se renderiza el componente, pero luego lo actualizo, entonces se renderiza y luego lo actualizo y así infinitamente, por eso es importante ponerlo en un useEffect */
     useEffect(() => {
-        /* console.log(`me ejecutoooooooo`); */
         setIsLiked(post.likes.includes(auth.user._id));
         setLike(post.likes.length);
-        /* auth */
     }, [post.likes]);
 
     const likeHandler = async () => {

@@ -2,7 +2,7 @@ import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileData } from "../features/user/userSlice";
@@ -21,7 +21,6 @@ export default function Profile() {
     }, [auth]);
 
     useEffect(() => {
-        /* console.log(`ESTO SE EJECUTA?`); */
         dispatch(userProfileData(nameParams));
     }, [nameParams]);
 
@@ -59,7 +58,9 @@ export default function Profile() {
                                 {user.userProfileData.name}
                             </h4>
                             <span className="profileInfoDesc font-light">
-                                {user.userProfileData.desc}
+                                {user.userProfileData.desc
+                                    ? user.userProfileData.desc
+                                    : ""}
                             </span>
                         </div>
                     </div>

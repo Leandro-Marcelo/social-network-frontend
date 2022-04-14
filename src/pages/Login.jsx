@@ -19,10 +19,8 @@ export default function SignInSide() {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    /* console.log(auth.logged); */
 
     useEffect(() => {
-        /*      console.log(`se imprime?`, auth.logged); */
         if (auth.logged) navigate("/");
     }, [auth]);
 
@@ -30,12 +28,6 @@ export default function SignInSide() {
         email: "",
         password: "",
     };
-
-    /* useEffect(() => {
-        if (user.logged) {
-            navigate("/");
-        }
-    }, [user]); */
 
     const [credentials, setCredentials] = useState(initialState);
 
@@ -101,10 +93,6 @@ export default function SignInSide() {
                         <Typography component="h1" variant="h4">
                             Login
                         </Typography>
-                        {/*  <Typography component="h1" variant="h4">
-                            Login First
-                        </Typography> */}
-
                         <Box component="div" noValidate sx={{ mt: 1 }}>
                             <Button
                                 variant="contained"

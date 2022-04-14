@@ -10,7 +10,6 @@ export default function Home() {
     const auth = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
-    /* agregar el logout  */
     useEffect(() => {
         if (auth.logged === false) navigate("/login");
     }, [auth]);
@@ -21,9 +20,6 @@ export default function Home() {
             <div className="homeContainer flex w-full">
                 {auth.logged && <Sidebar />}
                 {auth.logged && <Feed />}
-                {/*   <Sidebar /> */}
-                {/* <Feed username={false} />
-                <Rightbar /> */}
                 {auth.logged && <Rightbar />}
             </div>
         </>

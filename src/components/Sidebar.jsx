@@ -67,7 +67,7 @@ export default function Sidebar() {
                 </button>
                 <hr className="sidebarHr  my-5 mx-0" />
                 <h4 className="rightbarTitle text-xl font-medium mb-3 ml-2">
-                    Usuarios
+                    Users
                 </h4>
                 <ul className="sidebarFriendList">
                     {user.usersList
