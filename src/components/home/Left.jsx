@@ -26,7 +26,11 @@ const Left = () => {
     return (
         /* top-[5.4rem] */
         /* sticky top-[5.4rem] */
-        <div className="left  992:w-20  992:z-[5] 1200:w-auto 1200:z-0 h-max sticky top-[5.4rem]">
+        /* 992:w-20  992:z-[5]  */
+        /* 1200:w-auto */
+        /* 1200:z-0 */
+        /* h-max  */
+        <div className="left sticky ">
             <Link
                 to={"/"}
                 className="profile hidden p-4 bg-hWhite rounded-[1rem] 1200:flex items-center gap-x-4 w-full"

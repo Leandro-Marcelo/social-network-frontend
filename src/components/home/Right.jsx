@@ -7,6 +7,7 @@ const Right = () => {
 
     return (
         /* top-[-18rem]  */
+        /* hidden 992:block right h-max sticky top-[5.4rem] bottom-0 */
         <div className="hidden 992:block right h-max sticky top-[5.4rem] bottom-0">
             <div className="messages bg-hWhite rounded-[1rem] p-4">
                 <div className="heading flex items-center justify-between mb-4">
