@@ -11,7 +11,10 @@ const Home2 = () => {
     */
     return (
         /* min-h-screen */
-        <div className="bg-hLight overflow-x-hidden text-hDark ">
+        /*  bg-hLight overflow-x-hidden text-hDark */
+        /* bg-hLight overflow-x-hidden text-hDark min-h-screen */
+        /* overflow-x-hidden esta wea me rompia el sticky wotofok */
+        <div className="bg-hLight  text-hDark min-h-screen">
             <Navbar />
             <Main />
         </div>

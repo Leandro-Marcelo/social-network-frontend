@@ -30,7 +30,7 @@ const Left = () => {
         /* 1200:w-auto */
         /* 1200:z-0 */
         /* h-max  */
-        <div className="left sticky ">
+        <div className="left h-max sticky top-[5.4rem]">
             <Link
                 to={"/"}
                 className="profile hidden p-4 bg-hWhite rounded-[1rem] 1200:flex items-center gap-x-4 w-full"

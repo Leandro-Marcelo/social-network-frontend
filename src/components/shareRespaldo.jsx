@@ -60,6 +60,19 @@ export default function Share() {
         <div className="share w-full  rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)]">
             <div className="shareWrapper py-3 px-3">
                 <div className="shareTop flex items-center">
+                    <Link to={`/profile/${auth.user.name}`}>
+                        <img
+                            className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
+                            /*  src={
+                                auth.user.img
+                                    ? PF + auth.user.img
+                                    : PF + "/files/noAvatar.png"
+                            } */
+                            src={profile1}
+                            alt="person1"
+                        />
+                    </Link>
+
                     {/* <input
                         placeholder={`What's in your mind ${
                             auth.user.name ? auth.user.username : "invitado"
@@ -70,28 +83,26 @@ export default function Share() {
                         onChange={handleChange}
                     /> */}
                     <form className="create-post w-full flex items-center justify-between mt-4 bg-hWhite py-[0.4rem] px-4 rounded-[2rem]">
-                        <Link to={`/profile/${auth.user.name}`}>
+                        <div className="profile-picture w-[2.7rem] rounded-[50%] overflow-hidden">
                             <img
-                                className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
-                                /*  src={
-                                auth.user.img
-                                    ? PF + auth.user.img
-                                    : PF + "/files/noAvatar.png"
-                            } */
                                 src={profile1}
-                                alt="person1"
+                                alt=""
+                                className="block w-full"
                             />
-                        </Link>
+                        </div>
                         <input
                             type="text"
                             placeholder="dsoakdsao"
                             className="w-full ml-4 bg-[transparent] text-hDark mr-4 outline-none"
                         />
+                        <input
+                            type="submit"
+                            value={"Post"}
+                            className="btn bg-hPrimary text-white"
+                        />
                     </form>
                 </div>
-                {/* <hr className="shareHr mx-5 my-5" /> */}
-                <div className="flex justify-between items-center bg-hLight py-[0.1rem] mx-5 my-5 rounded-[1rem]"></div>
-                {/* <span className="mx-5 my-5 border-t-2 border-solid border-hGray"></span> */}
+                <hr className="shareHr mx-5 my-5" />
 
                 {credentials.img && (
                     /* pt-0 pr-5 pb-3 pl-5 relative */
@@ -165,7 +176,7 @@ export default function Share() {
                         </div>
                     </div>
                     <button
-                        className="shareButton flex py-[0.4rem] px-[0.7rem] font-medium rounded-[2rem] cursor-pointer text-[0.9rem] bg-hPrimary text-[white] transition-btn hover:opacity-80 mr-5"
+                        className="shareButton border-none px-2 py-2 text-xs sm:text-[16px]  rounded-md bg-hPrimary font-medium mr-5 cursor-pointer text-white"
                         onClick={handleSubmit}
                     >
                         Share

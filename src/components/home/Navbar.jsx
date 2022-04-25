@@ -13,6 +13,7 @@ const Navbar = () => {
     sticky-top-right: -18rem
     */
     return (
+        /* bg-hWhite */
         <div className="Navbar w-full bg-hWhite py-[0.7rem] fixed top-0 z-10">
             {/* 992:w-[96%] */}
             <div className="container w-[92%] 680:w-[80%] mx-auto flex justify-between items-center">

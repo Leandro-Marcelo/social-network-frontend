@@ -8,9 +8,11 @@ import SignUp from "./pages/SignUp";
 import SignUp2 from "./pages/SignUp2";
 import SetAvatar from "./pages/SetAvatar";
 import Chat from "./pages/Chat";
+import Casa from "./pages/Casa";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { validate } from "./features/auth/authSlice";
+import Hola from "./pages/Hola";
 
 function App() {
     const dispatch = useDispatch();
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/profile/:name" element={<Profile />} />
                 <Route path="/setAvatar" element={<SetAvatar />} />
                 <Route path="/Chat" element={<Chat />} />
+                <Route path="/casa" element={<Casa />} />
+                <Route path="/hola" element={<Hola />} />
             </Routes>
         </BrowserRouter>
     );

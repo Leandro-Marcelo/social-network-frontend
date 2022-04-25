@@ -10,9 +10,9 @@ export default function Home() {
     const auth = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    /*   useEffect(() => {
         if (auth.logged === false) navigate("/login");
-    }, [auth]);
+    }, [auth]); */
 
     return (
         <>
