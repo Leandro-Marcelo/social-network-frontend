@@ -79,6 +79,21 @@ export const unfollow = createAsyncThunk(
     }
 );
 
+export const setAvatar = createAsyncThunk(
+    "user/setAvatar",
+    async (userImage, { rejectWithValue }) => {
+        console.log(userImage);
+        try {
+            const response = await aPut(`/users/avatar/setAvatar`, userImage);
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error.response?.data);
+            return rejectWithValue(error.response?.data);
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -190,6 +205,21 @@ const userSlice = createSlice({
                 ...state,
                 status: "rejected",
                 message: "",
+            };
+        },
+        [setAvatar.pending]: (state, action) => {
+            return {
+                ...state,
+            };
+        },
+        [setAvatar.fulfilled]: (state, action) => {
+            return {
+                ...state,
+            };
+        },
+        [setAvatar.rejected]: (state, action) => {
+            return {
+                ...state,
             };
         },
     },

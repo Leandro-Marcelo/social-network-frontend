@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 export default function CloseFriend({ user }) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    console.log(user.img);
     return (
         <Link to={`/profile/${user.name}`}>
             <li className="sidebarFriend flex items-center mb-4">

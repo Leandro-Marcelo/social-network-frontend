@@ -57,7 +57,7 @@ export default function Post({ post }) {
                     <img
                         className="postImg mt-5 w-full max-h-[700px] object-contain"
                         /* src={post.img ? PF + post.img : ""} */
-                        src={post.img ? "http://localhost:4000" + post.img : ""}
+                        src={post.img ? PF + post.img : ""}
                         alt=""
                     />
                 </div>

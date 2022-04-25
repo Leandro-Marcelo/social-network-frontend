@@ -21,7 +21,7 @@ export default function SignInSide() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (auth.logged) navigate("/");
+        if (auth.logged) navigate("/social-network-frontend");
     }, [auth]);
 
     const initialState = {

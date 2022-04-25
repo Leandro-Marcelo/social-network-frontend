@@ -3,6 +3,7 @@ import { aDelete, aGet, aPost, aPut } from "../../axios";
 
 const initialState = {
     logged: false,
+    /* user: {}, */
     user: [],
     status: "",
     message: "",
@@ -16,6 +17,7 @@ const initialState = {
 export const login = createAsyncThunk(
     "auth/login",
     async (credentials, { rejectWithValue }) => {
+        console.log(credentials);
         try {
             const response = await aPost("/auth/login", credentials);
             //console.log(response.data);
@@ -76,7 +78,14 @@ export const validate = createAsyncThunk(
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        cleanUpToast(state, action) {
+            state.statusSignUp = "";
+            state.statusLogin = "";
+            state.messageLogin = "";
+            state.messageSignUp = "";
+        },
+    },
     extraReducers: {
         [login.pending]: (state, action) => {
             return {
@@ -192,12 +201,6 @@ const authSlice = createSlice({
         [validate.pending]: (state, action) => {
             return {
                 ...state,
-                logged: false,
-                user: [],
-                /* isFetching */
-                status: "",
-                /* message */
-                message: "",
             };
         },
         [validate.fulfilled]: (state, action) => {
@@ -219,16 +222,10 @@ const authSlice = createSlice({
             return {
                 ...state,
                 logged: false,
-                user: [],
-                /* dependiendo de si fue fulfilled o rejected, mostrara un mensaje */
-                /* isFetching */
-                status: "rejected",
-                /* message */
-                message: "",
             };
         },
     },
 });
 
-//export const {logout,validate} = userSlice.actions // Esto se utiliza en el dispatch
+export const { cleanUpToast } = authSlice.actions;
 export default authSlice.reducer; // Esto en el store

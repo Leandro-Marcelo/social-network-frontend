@@ -20,7 +20,7 @@ export default function SignInSide() {
     const navigate = useNavigate();
     /* console.log(auth.logged); */
     useEffect(() => {
-        if (auth.logged) navigate("/");
+        if (auth.logged) navigate("/social-network-frontend");
     }, [auth]);
 
     /* Otra forma de registrarse sería hacer todo en el evento sign in / submit, es decir, agarrar recien los datos ya que probablemente son los finales y crearlo, pero la ventaja de que esten controlados es que puedo hacer validaciones */

@@ -109,7 +109,8 @@ export default function Rightbar({ profileId }) {
                     <img
                         className="birthdayImg w-10 h-10 mr-3"
                         /* estas no les hace un src dinamico porque son una imagen static */
-                        src={PF + "/files/gift.png"}
+                        src={PF + "/files/avatar1.png"}
+                        /* src={PF + "/files/gift.png"} */
                         alt=""
                     />
                     <span className="birthdayText font-light text-[15px]">

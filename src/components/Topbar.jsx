@@ -14,10 +14,13 @@ const Topbar = () => {
     const logoutUser = () => {
         dispatch(logout());
     };
+
+    console.log(auth.user.img);
+
     return (
         <div className="topbarContainer h-[50px] w-full bg-[#1877f2] flex items-center sticky top-0 z-50">
             <div className="topbarLeft flex-[2] md:flex-[3] ">
-                <Link to={"/"}>
+                <Link to={"/social-network-frontend"}>
                     <span className="cursor-pointer font-semibold ml-5 text-white text-xs md:text-2xl ">
                         Home
                     </span>
@@ -56,12 +59,14 @@ const Topbar = () => {
                             1
                         </span>
                     </div>
-                    <div className="hidden md:block topbarIconsItem mr-6  relative">
-                        <ChatIcon />
-                        <span className="topbarIconBadge w-4 h-4 bg-red-600 rounded-[50%] text-white absolute top-[-5px] right-[-5px] flex justify-center items-center text-xs">
-                            2
-                        </span>
-                    </div>
+                    <Link to={"/chat"}>
+                        <div className="hidden md:block topbarIconsItem mr-6  relative">
+                            <ChatIcon />
+                            <span className="topbarIconBadge w-4 h-4 bg-red-600 rounded-[50%] text-white absolute top-[-5px] right-[-5px] flex justify-center items-center text-xs">
+                                2
+                            </span>
+                        </div>
+                    </Link>
                     <div className="hidden md:block topbarIconsItem mr-6 relative">
                         <NotificationsIcon />
                         <span className="topbarIconBadge w-4 h-4 bg-red-600 rounded-[50%] text-white absolute top-[-5px] right-[-5px] flex justify-center items-center text-xs">
