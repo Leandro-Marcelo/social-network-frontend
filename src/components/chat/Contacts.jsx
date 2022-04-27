@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import Logo from "../../assets/logo.svg";
+import Logo from "../../assets/logo.png";
 import { setCurrentSelected } from "../../features/chat/chatsSlice";
 
 export default function Contacts({ changeChat }) {
@@ -36,33 +36,34 @@ export default function Contacts({ changeChat }) {
                   }
                 */}
                 <div className="contacts flex flex-col items-center overflow-auto gap-[0.8rem]">
-                    {user.friendsList.map((friend, index) => {
-                        return (
-                            <div
-                                key={friend._id}
-                                className={`contact bg-[#ffffff34] min-h-[5rem] cursor-pointer w-[90%] rounded-[0.2rem] p-[0.4rem] flex gap-[1rem] items-center transition duration-500 ease-in-out ${
-                                    friend._id === chats.currentSelected
-                                        ? "bg-[#9a86f3]"
-                                        : ""
-                                }`}
-                                onClick={() => changeCurrentChat(friend)}
-                            >
-                                <div className="avatar">
-                                    <img
-                                        src={APIREST + friend.img}
-                                        alt=""
-                                        className="h-[3rem]"
-                                    />
-                                </div>
+                    {user.friendsList.length > 0 &&
+                        user.friendsList.map((friend, index) => {
+                            return (
+                                <div
+                                    key={friend._id}
+                                    className={`contact bg-[#ffffff34] min-h-[5rem] cursor-pointer w-[90%] rounded-[0.2rem] p-[0.4rem] flex gap-[1rem] items-center transition duration-500 ease-in-out ${
+                                        friend._id === chats.currentSelected
+                                            ? "bg-[#9a86f3]"
+                                            : ""
+                                    }`}
+                                    onClick={() => changeCurrentChat(friend)}
+                                >
+                                    <div className="avatar">
+                                        <img
+                                            src={APIREST + friend.img}
+                                            alt=""
+                                            className="h-[3rem]"
+                                        />
+                                    </div>
 
-                                <div className="username">
-                                    <h3 className="text-white">
-                                        {friend.name}
-                                    </h3>
+                                    <div className="username">
+                                        <h3 className="text-white">
+                                            {friend.name}
+                                        </h3>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
                 </div>
                 <div className="current-user bg-[#0d0d30] flex justify-center items-center md:gap-[0.5rem]">
                     <div className="avatar" style={{ maxInlineSize: "100%" }}>

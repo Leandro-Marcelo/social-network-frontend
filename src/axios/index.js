@@ -3,10 +3,10 @@ import axios from "axios";
 /* voy a usar la técnica de tzuzul aunque el agregó un proxy */
 /* const URL = ; */
 
-const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+const APIREST = process.env.REACT_APP_APIREST;
 
 const instance = axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: APIREST,
 });
 
 const aGet = async (url) => {

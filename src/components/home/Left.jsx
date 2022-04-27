@@ -9,8 +9,11 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import TravelExploreOutlinedIcon from "@mui/icons-material/TravelExploreOutlined";
+import { useSelector } from "react-redux";
 
 const Left = () => {
+    const auth = useSelector((state) => state.auth);
+    const APIREST = process.env.REACT_APP_APIREST;
     /* 
     borderRadius: rounded-[2rem]  
     cardBorderRadius: rounded-[1rem] 
@@ -30,13 +33,23 @@ const Left = () => {
         /* 1200:w-auto */
         /* 1200:z-0 */
         /* h-max  */
-        <div className="left h-max sticky top-[5.4rem]">
+        /* hidden 992:block right h-max sticky top-[5.4rem] bottom-0 */
+        /* left h-max sticky top-[5.4rem] */
+        <div className="left h-max block sticky top-[5.4rem] mt-[5.4rem]">
             <Link
                 to={"/"}
                 className="profile hidden p-4 bg-hWhite rounded-[1rem] 1200:flex items-center gap-x-4 w-full"
             >
                 <div className="profile-picture w-[2.7rem] rounded-[50%] overflow-hidden">
-                    <img src={profile1} alt="" className="block w-full" />
+                    <img
+                        src={
+                            auth.user.img
+                                ? APIREST + auth.user.img
+                                : APIREST + "/files/noAvatar.png"
+                        }
+                        alt=""
+                        className="block w-full"
+                    />
                 </div>
                 <div className="handle">
                     <h4>Leandro</h4>
@@ -52,7 +65,7 @@ const Left = () => {
                             ? `bg-hLight before:block before:w-[0.5rem] before:h-full before:absolute before:bg-hPrimary rounded-t-[1rem] overflow-hidden`
                             : ""
                     }`}
-                    to={"/"}
+                    to={"/home2"}
                 >
                     <HomeOutlinedIcon
                         className={`"text-[1.4rem] ${
@@ -176,7 +189,7 @@ const Left = () => {
                             ? `bg-hLight before:block before:w-[0.5rem] before:h-full before:absolute before:bg-hPrimary  overflow-hidden`
                             : ""
                     }`}
-                    to={"/"}
+                    to={"/chat"}
                 >
                     <ChatOutlinedIcon className="text-[1.4rem] text-hGray 1200:ml-8 relative" />
                     {/* Messages */}

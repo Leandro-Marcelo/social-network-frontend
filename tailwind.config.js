@@ -11,6 +11,7 @@ module.exports = {
             hDanger: "hsl(0,95%,65%)",
             hDark: "hsl(252,30%,17%)",
             hBlack: "hsl(252,30%,10%)",
+            white: "#fff",
         },
         screens: {
             530: "680px",

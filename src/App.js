@@ -4,6 +4,7 @@ import Home2 from "./pages/Home2";
 import Login from "./pages/Login";
 import Login2 from "./pages/Login2";
 import Profile from "./pages/Profile";
+import Profile2 from "./pages/Profile2";
 import SignUp from "./pages/SignUp";
 import SignUp2 from "./pages/SignUp2";
 import SetAvatar from "./pages/SetAvatar";
@@ -32,9 +33,10 @@ function App() {
                 <Route path="/signup2" element={<SignUp2 />} />
                 <Route path="/profile/:name" element={<Profile />} />
                 <Route path="/setAvatar" element={<SetAvatar />} />
-                <Route path="/Chat" element={<Chat />} />
+                <Route path="/chat" element={<Chat />} />
                 <Route path="/casa" element={<Casa />} />
                 <Route path="/hola" element={<Hola />} />
+                <Route path="/profile2/:name" element={<Profile2 />} />
             </Routes>
         </BrowserRouter>
     );

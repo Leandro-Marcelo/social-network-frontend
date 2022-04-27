@@ -40,7 +40,7 @@ export default function Chat() {
     return (
         <>
             {/* me ahorro traer a los amigos porque cada vez que recargo la página, lo lleva a home y en home es donde pide los amigos, entonces almomento de clickear en chatear pues al estar utilizando react router, es decir, el Link, no se recarga la página por lo que seguimos conservando los usuarios */}
-            {auth.logged && (
+            {auth.user && (
                 <div className="Container h-screen w-screen flex flex-col justify-center gap-4 items-center bg-[#131324] ">
                     <div className="container h-[85vh] w-[85vw] bg-[#00000076] grid grid-cols-[25%_75%] md:grid-cols-[35%_65%]">
                         <Contacts changeChat={handleChatChange} />

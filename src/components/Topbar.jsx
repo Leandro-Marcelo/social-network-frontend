@@ -59,7 +59,7 @@ const Topbar = () => {
                             1
                         </span>
                     </div>
-                    <Link to={"/chat"}>
+                    <Link to={"/home2"}>
                         <div className="hidden md:block topbarIconsItem mr-6  relative">
                             <ChatIcon />
                             <span className="topbarIconBadge w-4 h-4 bg-red-600 rounded-[50%] text-white absolute top-[-5px] right-[-5px] flex justify-center items-center text-xs">

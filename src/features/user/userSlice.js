@@ -4,7 +4,7 @@ import { aDelete, aGet, aPost, aPut } from "../../axios";
 const initialState = {
     usersList: [],
     userProfileData: {},
-    friendsList: {},
+    friendsList: [],
     /* el status pending debería ir uno por cada solicitud ya sea friendList o userProfiledata, o para un login ya que sino todos se activarían y quizas no se estan ni ejecutando viste, como paso en login que entrabas y el validate ponia el status en pending y se veía como que le habías dado a logearte xd */
     status: "",
     message: "",

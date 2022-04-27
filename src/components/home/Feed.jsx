@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Share from "./Share";
 import Post from "./Post";
-import { getPostsHome, getPostsName } from "../features/post/postSlice";
+import { getPostsHome, getPostsName } from "../../features/post/postSlice";
 
 const Feed = ({ name }) => {
     const auth = useSelector((state) => state.auth);

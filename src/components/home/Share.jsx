@@ -3,12 +3,12 @@ import LabelIcon from "@mui/icons-material/Label";
 import RoomIcon from "@mui/icons-material/Room";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CancelIcon from "@mui/icons-material/Cancel";
-import profile1 from "../assets/Home/images/profile-1.jpg";
+import profile1 from "../../assets/Home/images/profile-1.jpg";
 /* pendiente */
 /* import CancelIcon from "@mui/icons-material/Cancel"; */
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../features/post/postSlice";
+import { createPost } from "../../features/post/postSlice";
 import { Link } from "react-router-dom";
 
 export default function Share() {
@@ -57,49 +57,34 @@ export default function Share() {
         });
     };
     return (
-        <div className="share w-full  rounded-xl shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)]">
+        <div className="share w-full  rounded-[1rem] shadow-[0_0_16px_-8px_rgba(0,0,0,0.68)] bg-[white] mt-4">
             <div className="shareWrapper py-3 px-3">
                 <div className="shareTop flex items-center">
-                    {/* <input
-                        placeholder={`What's in your mind ${
-                            auth.user.name ? auth.user.username : "invitado"
-                        }?`}
-                        className="shareInput border-none w-[80%] focus:outline-none  text-[15px]"
-                        value={credentials.desc}
-                        name={"desc"}
-                        onChange={handleChange}
-                    /> */}
                     <form className="create-post w-full flex items-center justify-between mt-4 bg-hWhite py-[0.4rem] px-4 rounded-[2rem]">
                         <Link to={`/profile/${auth.user.name}`}>
                             <img
                                 className="shareProfileImg w-12 h-12 rounded-[50%] object-cover mr-2"
-                                /*  src={
-                                auth.user.img
-                                    ? PF + auth.user.img
-                                    : PF + "/files/noAvatar.png"
-                            } */
                                 src={profile1}
                                 alt="person1"
                             />
                         </Link>
                         <input
                             type="text"
-                            placeholder="dsoakdsao"
+                            placeholder="Crea un Post"
+                            name="desc"
                             className="w-full ml-4 bg-[transparent] text-hDark mr-4 outline-none"
+                            value={credentials.desc}
+                            onChange={handleChange}
                         />
                     </form>
                 </div>
-                {/* <hr className="shareHr mx-5 my-5" /> */}
+                {/*  <hr className="shareHr mx-5 my-5" /> */}
                 <div className="flex justify-between items-center bg-hLight py-[0.1rem] mx-5 my-5 rounded-[1rem]"></div>
-                {/* <span className="mx-5 my-5 border-t-2 border-solid border-hGray"></span> */}
-
                 {credentials.img && (
-                    /* pt-0 pr-5 pb-3 pl-5 relative */
-                    <div className="shareImgContainer pt-0 pr-5 pb-3 pl-5 relative ">
+                    <div className="shareImgContainer pt-0 pr-5 pb-3 pl-5 relative">
                         <img
-                            /* shareImg w-full object-cover */
-                            className="shareImg object-cover w-[286px] h-[286px]"
-                            //   coomo hace esto xd
+                            /* w-[486px] h-[286px] */
+                            className="shareImg object-cover w-[286px] h-[286px] mx-auto"
                             src={URL.createObjectURL(credentials.img)}
                             alt="shareImg"
                         />
@@ -112,7 +97,7 @@ export default function Share() {
                             }
                             className="absolute top-0 right-[20px] cursor-pointer"
                         >
-                            <CancelIcon className="shareCancelImg" />
+                            <CancelIcon className="shareCancelImg text-hPrimary" />
                         </div>
                     </div>
                 )}
@@ -123,13 +108,11 @@ export default function Share() {
                             className="file shareOption flex items-center mr-4 cursor-pointer"
                         >
                             <PermMediaIcon className="shareIcon mr-1 text-[tomato]" />
-                            {/* Photo or Video decía */}
+
                             <span className="hidden sm:inline-block shareOptionText text-[14px] font-medium">
                                 Photo
                             </span>
                             <input
-                                /* style={{ display: "none" }} */
-                                /* puedo hacer que en determinado tamaño depantalla ponga photo and videos */
                                 className="hidden"
                                 id="img"
                                 name="img"
@@ -165,7 +148,7 @@ export default function Share() {
                         </div>
                     </div>
                     <button
-                        className="shareButton flex py-[0.4rem] px-[0.7rem] font-medium rounded-[2rem] cursor-pointer text-[0.9rem] bg-hPrimary text-[white] transition-btn hover:opacity-80 mr-5"
+                        className="shareButton flex py-[0.4rem] px-[0.7rem] font-medium rounded-[2rem] cursor-pointer text-[0.9rem] bg-hPrimary text-[white] transition-btn hover:opacity-80 mr-5 1450:py-[0.6rem] 1450:px-[1.3rem]"
                         onClick={handleSubmit}
                     >
                         Share

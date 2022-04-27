@@ -11,7 +11,10 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-const Middle = () => {
+import Share from "./Share";
+import Feed from "./Feed";
+import Friends from "./Friends";
+const Middle = ({ name, profileId }) => {
     return (
         <div className="middle w-[80vw]  530:p-0 530:w-auto mt-[5.4rem]">
             {/* ********************************* STORIES ****************************** */}
@@ -68,7 +71,7 @@ const Middle = () => {
             </div>
             {/* ********************************* END STORIES ****************************** */}
 
-            <form className="create-post w-full flex items-center justify-between mt-4 bg-hWhite py-[0.4rem] px-4 rounded-[2rem]">
+            {/* <form className="create-post w-full flex items-center justify-between mt-4 bg-hWhite py-[0.4rem] px-4 rounded-[2rem]">
                 <div className="profile-picture w-[2.7rem] rounded-[50%] overflow-hidden">
                     <img src={profile1} alt="" className="block w-full" />
                 </div>
@@ -82,11 +85,15 @@ const Middle = () => {
                     value={"Post"}
                     className="btn bg-hPrimary text-white"
                 />
-            </form>
+            </form> */}
 
             {/* ********************************* FEEDS ****************************** */}
 
-            <div className="feeds">
+            {name && <Friends profileId={profileId} />}
+
+            {name ? <Feed name={name} /> : <Feed />}
+
+            {/* <div className="feeds">
                 <div className="feed bg-hWhite rounded-[1rem] p-4 my-4 text-[0.85rem] leading-6">
                     <div className="head flex justify-between">
                         <div className="user flex gap-4 ">
@@ -184,7 +191,7 @@ const Middle = () => {
                         View all 277 comments
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* ********************* */}
         </div>

@@ -3,7 +3,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { likeIt } from "../features/post/postSlice";
+import { likeIt } from "../../features/post/postSlice";
 import profile1 from "../../assets/Home/images/profile-1.jpg";
 import feed1 from "../../assets/Home/images/feed-1.jpg";
 import Checkbox from "@mui/material/Checkbox";
@@ -15,8 +15,8 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import ShareIcon from "@mui/icons-material/Share";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-
 const Post = ({ post }) => {
+    console.log(post);
     const [like, setLike] = useState(post.likes.length);
     const [isLiked, setIsLiked] = useState(false);
     const dispatch = useDispatch();
@@ -34,6 +34,8 @@ const Post = ({ post }) => {
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked);
     };
+
+    /* HACER UNA CUANDO NO TENGA IMAGEN TIPO FACEBOOK Y CON IMAGEN, COMO ESTA AHORA TIPO IG */
 
     return (
         <div className="feed bg-hWhite rounded-[1rem] p-4 my-4 text-[0.85rem] leading-6">
@@ -54,7 +56,9 @@ const Post = ({ post }) => {
                     </div>
                     <div className="ingo">
                         <h3> {post.userId.name}</h3>
-                        <small>Dubai, 15 minutes ago</small>
+                        <small>
+                            Chile, {new Date(post.createdAt).toLocaleString()}
+                        </small>
                     </div>
                 </div>
                 <MoreVertIcon className="text-[black]" />
@@ -69,6 +73,7 @@ const Post = ({ post }) => {
                             <FavoriteBorderOutlinedIcon className="text-[black]" />
                         }
                         checkedIcon={<FavoriteIcon className="text-hPrimary" />}
+                        onClick={likeHandler}
                     />
                     <Checkbox
                         icon={<ShareOutlinedIcon className="text-[black]" />}
@@ -127,12 +132,12 @@ const Post = ({ post }) => {
                     />
                 </span>
                 <p className="ml-2">
-                    Liked by <b>Ernest Achiever</b> and <b>2,323 others</b>
+                    Liked by <b>Ernest Achiever</b> and <b>{like} others</b>
                 </p>
             </div>
             <div className="caption">
                 <p className="ml-4">
-                    <b>{post.userId.name}</b> {post?.desc}{" "}
+                    <b>{post.userId.name}</b> {post.desc}{" "}
                     <span className="harsh-tag">#lifestyle</span>
                 </p>
             </div>
